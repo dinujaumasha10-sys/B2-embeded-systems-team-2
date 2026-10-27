@@ -2,10 +2,10 @@ const int redLED = 8;
 const int yellowLED = 9;
 const int greenLED = 10;
 
-const unsigned long RED_TIME = 5000;
+const unsigned long RED_TIME = 10000;
 const unsigned long RED_YELLOW_TIME = 1000;
-const unsigned long GREEN_TIME = 5000;
-const unsigned long YELLOW_TIME = 2000;
+const unsigned long GREEN_TIME = 10000;
+const unsigned long YELLOW_TIME = 5000;
 
 enum State {
   RED,
