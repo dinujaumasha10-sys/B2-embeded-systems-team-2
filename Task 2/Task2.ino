@@ -1,3 +1,4 @@
+
 class TrafficLightSystem {
 
   private:
@@ -19,6 +20,7 @@ class TrafficLightSystem {
       RED,
       RED_YELLOW,
       GREEN,
+      YELLOW,
       PEDESTRIAN
     };
 
@@ -84,7 +86,7 @@ class TrafficLightSystem {
           if (buttonPressed) {
             changeTo(PEDESTRIAN);
           }
-          else if (millis() - stateStartTime >= 5000UL) {
+          else if (millis() - stateStartTime >= 10000UL) {
             changeTo(RED_YELLOW);
           }
           break;
@@ -93,13 +95,8 @@ class TrafficLightSystem {
           // Car RED + YELLOW, pedestrian RED
           setLights(HIGH, HIGH, LOW, HIGH, LOW);
 
-          if (millis() - stateStartTime >= 5000UL) {
-            if (buttonPressed) {
-              changeTo(PEDESTRIAN);
-            }
-            else {
-              changeTo(GREEN);
-            }
+          if (millis() - stateStartTime >= 1000UL) {
+            changeTo(GREEN);
           }
           break;
 
@@ -108,14 +105,16 @@ class TrafficLightSystem {
           setLights(LOW, LOW, HIGH, HIGH, LOW);
 
           if (millis() - stateStartTime >= 10000UL) {
-            if (buttonPressed) {
-              // Go directly to pedestrian crossing
-              changeTo(PEDESTRIAN);
-            }
-            else {
-              // Normal sequence: GREEN -> RED
-              changeTo(RED);
-            }
+            changeTo(YELLOW);
+          }
+          break;
+
+        case YELLOW:
+          // Car YELLOW, pedestrian RED
+          setLights(LOW, HIGH, LOW, HIGH, LOW);
+
+          if (millis() - stateStartTime >= 5000UL) {
+            changeTo(RED);
           }
           break;
 
@@ -125,7 +124,7 @@ class TrafficLightSystem {
 
           if (millis() - stateStartTime >= 10000UL) {
             buttonPressed = false;
-            changeTo(RED);
+            changeTo(RED_YELLOW);
           }
           break;
       }
@@ -141,3 +140,8 @@ void setup() {
 void loop() {
   trafficLight.changeState();
 }
+
+
+  
+   
+      
